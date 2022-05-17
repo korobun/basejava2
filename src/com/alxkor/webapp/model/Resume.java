@@ -1,3 +1,5 @@
+package com.alxkor.webapp.model;
+
 /**
  * Initial resume class
  */

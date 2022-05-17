@@ -1,9 +1,14 @@
+package com.alxkor.webapp;
+
+import com.alxkor.webapp.model.Resume;
+import com.alxkor.webapp.storage.ArrayStorage;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Interactive test for ArrayStorage implementation
+ * Interactive test for com.alxkor.webapp.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
 public class MainArray {

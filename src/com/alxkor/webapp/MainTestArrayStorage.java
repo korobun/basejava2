@@ -1,5 +1,10 @@
+package com.alxkor.webapp;
+
+import com.alxkor.webapp.model.Resume;
+import com.alxkor.webapp.storage.ArrayStorage;
+
 /**
- * Test for your ArrayStorage implementation
+ * Test for your com.alxkor.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
@@ -11,10 +16,17 @@ public class MainTestArrayStorage {
         r2.setUuid("uuid2");
         Resume r3 = new Resume();
         r3.setUuid("uuid3");
+        Resume r4 = new Resume();
+        r4.setUuid("uuid4");
 
         ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
+
+        System.out.println("Update r2: " + ARRAY_STORAGE.get(r2.getUuid()));
+        ARRAY_STORAGE.update(r2);
+        System.out.println("Update r4: " + ARRAY_STORAGE.get(r4.getUuid()));
+        ARRAY_STORAGE.update(r4);
 
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
