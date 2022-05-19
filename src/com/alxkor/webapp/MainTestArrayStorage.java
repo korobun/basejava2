@@ -1,13 +1,14 @@
 package com.alxkor.webapp;
 
 import com.alxkor.webapp.model.Resume;
-import com.alxkor.webapp.storage.ArrayStorage;
+import com.alxkor.webapp.storage.SortedArrayStorage;
+import com.alxkor.webapp.storage.Storage;
 
 /**
  * Test for your com.alxkor.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume();
@@ -19,9 +20,9 @@ public class MainTestArrayStorage {
         Resume r4 = new Resume();
         r4.setUuid("uuid4");
 
-        ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
+        ARRAY_STORAGE.save(r1);
 
         System.out.println("Update r2: " + ARRAY_STORAGE.get(r2.getUuid()));
         ARRAY_STORAGE.update(r2);
