@@ -1,5 +1,8 @@
 package com.alxkor.webapp.storage;
 
+import com.alxkor.webapp.exception.ExistStorageException;
+import com.alxkor.webapp.exception.NotExistStorageException;
+import com.alxkor.webapp.exception.StorageException;
 import com.alxkor.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -21,13 +24,11 @@ public abstract class AbstractArrayStorage implements Storage {
     public final void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (index >= 0) {
-            System.out.println("ERROR: Resume " + r.getUuid() + " already exist in storage");
-            return;
+            throw new ExistStorageException(r.getUuid());
         }
 
         if (size >= MAX_SIZE) {
-            System.out.println("ERROR: Storage overflow");
-            return;
+            throw new StorageException("ERROR: Storage overflow", r.getUuid());
         }
 
         addResume(r, index);
@@ -39,7 +40,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             storage[index] = r;
         } else {
-            System.out.println("ERROR: Resume " + r.getUuid() + " not exist in storage");
+            throw new NotExistStorageException(r.getUuid());
         }
     }
 
@@ -55,7 +56,7 @@ public abstract class AbstractArrayStorage implements Storage {
             storage[size - 1] = null;
             size--;
         } else {
-            System.out.println("ERROR: Resume " + uuid + " not exist in storage.");
+            throw new NotExistStorageException(uuid);
         }
     }
 
