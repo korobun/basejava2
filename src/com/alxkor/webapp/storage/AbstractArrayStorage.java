@@ -12,12 +12,12 @@ import java.util.Arrays;
  */
 public abstract class AbstractArrayStorage implements Storage {
 
-    protected static final int MAX_SIZE = 3;
+    protected static final int MAX_SIZE = 10_000;
     protected static final Resume[] storage = new Resume[MAX_SIZE];
     protected int size = 0;
 
     public final void clear() {
-        Arrays.fill(storage, 0, size - 1, null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
@@ -46,7 +46,8 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public final Resume get(String uuid) {
         int index = getIndex(uuid);
-        return index >= 0 ? storage[index] : null;
+        if(index < 0) throw new NotExistStorageException(uuid);
+        return storage[index];
     }
 
     public final void delete(String uuid) {
