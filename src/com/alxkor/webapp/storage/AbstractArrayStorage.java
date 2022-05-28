@@ -1,8 +1,6 @@
 package com.alxkor.webapp.storage;
 
-import com.alxkor.webapp.exception.ExistStorageException;
 import com.alxkor.webapp.exception.NotExistStorageException;
-import com.alxkor.webapp.exception.StorageException;
 import com.alxkor.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -10,29 +8,15 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected static final int MAX_SIZE = 10_000;
-    protected static final Resume[] storage = new Resume[MAX_SIZE];
+    protected final Resume[] storage = new Resume[MAX_SIZE];
     protected int size = 0;
 
     public final void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
-    }
-
-    public final void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        }
-
-        if (size >= MAX_SIZE) {
-            throw new StorageException("ERROR: Storage overflow", r.getUuid());
-        }
-
-        addResume(r, index);
-        size++;
     }
 
     public final void update(Resume r) {
