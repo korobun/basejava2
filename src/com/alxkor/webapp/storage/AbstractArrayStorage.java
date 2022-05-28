@@ -1,6 +1,6 @@
 package com.alxkor.webapp.storage;
 
-import com.alxkor.webapp.exception.NotExistStorageException;
+import com.alxkor.webapp.exception.StorageException;
 import com.alxkor.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -19,32 +19,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    public final void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            storage[index] = r;
-        } else {
-            throw new NotExistStorageException(r.getUuid());
-        }
-    }
-
-    public final Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if(index < 0) throw new NotExistStorageException(uuid);
-        return storage[index];
-    }
-
-    public final void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            removeResume(uuid, index);
-            storage[size - 1] = null;
-            size--;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
-    }
-
     /**
      * @return array, contains only Resumes in storage (without null)
      */
@@ -56,10 +30,37 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    protected abstract int getIndex(String uuid);
+    @Override
+    protected void doSaving(Resume r, Object key) {
+        if (size >= MAX_SIZE) {
+            throw new StorageException("ERROR: Storage overflow", r.getUuid());
+        }
+        addResume(r, (Integer) key);
+        size++;
+    }
+
+    @Override
+    protected void doUpdating(Resume r, Object key) {
+        int index = (Integer) key;
+        storage[index] = r;
+    }
+
+    @Override
+    protected Resume doGetting(Object key) {
+        int index = (Integer) key;
+        return storage[index];
+    }
+
+    @Override
+    protected void doDeleting(Object key) {
+        int index = (Integer) key;
+        removeResume(index);
+        storage[size - 1] = null;
+        size--;
+    }
 
     protected abstract void addResume(Resume r, int index);
 
-    protected abstract void removeResume(String uuid, int index);
+    protected abstract void removeResume(int index);
 
 }
