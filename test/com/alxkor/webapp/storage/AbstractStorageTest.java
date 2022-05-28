@@ -41,20 +41,19 @@ abstract class AbstractStorageTest {
         Resume r = new Resume("uuid_4");
         storage.save(r);
         assertSize(4);
-        assertResume(r);
+        assertGetResume(r);
     }
 
     @Test
     final void update() {
         Resume r = new Resume(RESUME_1.getUuid());
         storage.update(r);
-        assertResume(r);
+        assertGetResume(r);
     }
 
     @Test
     final void get() {
-        String uuid = RESUME_1.getUuid();
-        assertResume(RESUME_1);
+        assertGetResume(RESUME_1);
     }
 
     @Test
@@ -97,7 +96,7 @@ abstract class AbstractStorageTest {
         assertEquals(size, storage.size());
     }
 
-    private void assertResume(Resume r) {
+    private void assertGetResume(Resume r) {
         assertEquals(r, storage.get(r.getUuid()));
     }
 
