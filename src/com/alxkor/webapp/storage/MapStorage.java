@@ -9,13 +9,13 @@ public class MapStorage extends AbstractStorage {
     protected final Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected Object getFindKey(String uuid) {
+    protected String getFindKey(String uuid) {
         return uuid;
     }
 
     @Override
-    protected boolean isResumeExist(Resume r) {
-        return storage.containsKey(r.getUuid());
+    protected boolean isResumeExist(Object key) {
+        return storage.containsKey((String) key);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Resume doGetting(Object key) {
-        return storage.get(key);
+        return storage.get((String) key);
     }
 
     @Override

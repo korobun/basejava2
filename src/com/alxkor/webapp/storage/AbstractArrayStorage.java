@@ -59,7 +59,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size--;
     }
 
-    protected abstract void addResume(Resume r, int index);
+    @Override
+    protected boolean isResumeExist(Object key) {
+        return (Integer) key >= 0;
+    }
+
+    protected abstract void addResume(Resume r, Integer index);
 
     protected abstract void removeResume(int index);
 
