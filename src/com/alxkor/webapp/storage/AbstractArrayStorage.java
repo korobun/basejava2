@@ -3,7 +3,9 @@ package com.alxkor.webapp.storage;
 import com.alxkor.webapp.exception.StorageException;
 import com.alxkor.webapp.model.Resume;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Array based storage for Resumes
@@ -17,13 +19,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public final void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
-    }
-
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
-    public final Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
     }
 
     public final int size() {
@@ -57,6 +52,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         removeResume(index);
         storage[size - 1] = null;
         size--;
+    }
+
+    @Override
+    protected List<Resume> getAllResumes() {
+        Resume[] resumeArray = Arrays.copyOfRange(storage, 0, size);
+        return new ArrayList<>(Arrays.asList(resumeArray));
     }
 
     @Override

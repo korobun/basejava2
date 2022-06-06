@@ -4,6 +4,10 @@ import com.alxkor.webapp.exception.ExistStorageException;
 import com.alxkor.webapp.exception.NotExistStorageException;
 import com.alxkor.webapp.model.Resume;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 public abstract class AbstractStorage implements Storage {
     @Override
     public final void save(Resume r) {
@@ -33,6 +37,16 @@ public abstract class AbstractStorage implements Storage {
         doDeleting(key);
     }
 
+    @Override
+    public final List<Resume> getAllSorted() {
+        List<Resume> allResumes = getAllResumes();
+        Comparator<Resume> comparator = Comparator.comparing(Resume::getFullName);
+        comparator.thenComparing(Resume::getUuid);
+
+        Collections.sort(allResumes, comparator);
+        return allResumes;
+    }
+
     protected abstract Object getFindKey(String uuid);
 
     protected abstract boolean isResumeExist(Object key);
@@ -44,4 +58,6 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Resume doGetting(Object key);
 
     protected abstract void doDeleting(Object key);
+
+    protected abstract List<Resume> getAllResumes();
 }

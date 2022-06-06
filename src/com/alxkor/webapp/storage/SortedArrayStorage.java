@@ -3,13 +3,14 @@ package com.alxkor.webapp.storage;
 import com.alxkor.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected Integer getFindKey(String uuid) {
         Resume key = new Resume(uuid);
-        return Arrays.binarySearch(storage, 0, size, key);
+        return Arrays.binarySearch(storage, 0, size, key, Comparator.comparing(Resume::getUuid));
     }
 
     @Override

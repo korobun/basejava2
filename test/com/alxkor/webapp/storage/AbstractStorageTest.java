@@ -6,6 +6,8 @@ import com.alxkor.webapp.model.Resume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 abstract class AbstractStorageTest {
@@ -60,11 +62,12 @@ abstract class AbstractStorageTest {
     final void delete() {
         storage.delete(RESUME_1.getUuid());
         assertSize(2);
+        assertThrows(NotExistStorageException.class, () -> storage.get(RESUME_1.getUuid()));
     }
 
     @Test
-    final void getAll() {
-        assertArrayEquals(new Resume[]{RESUME_1, RESUME_2, RESUME_3}, storage.getAll());
+    final void getAllSorted() {
+        assertEquals(Arrays.asList(RESUME_1, RESUME_2, RESUME_3), storage.getAllSorted());
     }
 
     @Test
