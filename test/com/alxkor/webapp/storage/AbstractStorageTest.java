@@ -16,9 +16,9 @@ abstract class AbstractStorageTest {
     private static final String UUID_1 = "uuid_1";
     private static final String UUID_2 = "uuid_2";
     private static final String UUID_3 = "uuid_3";
-    private static final Resume RESUME_1 = new Resume(UUID_1);
-    private static final Resume RESUME_2 = new Resume(UUID_2);
-    private static final Resume RESUME_3 = new Resume(UUID_3);
+    private static final Resume RESUME_1 = new Resume(UUID_1, "Name1");
+    private static final Resume RESUME_2 = new Resume(UUID_2, "Name2");
+    private static final Resume RESUME_3 = new Resume(UUID_3, "Name3");
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -40,7 +40,7 @@ abstract class AbstractStorageTest {
 
     @Test
     final void save() {
-        Resume r = new Resume("uuid_4");
+        Resume r = new Resume("uuid_4", "Name4");
         storage.save(r);
         assertSize(4);
         assertGetResume(r);
@@ -48,7 +48,7 @@ abstract class AbstractStorageTest {
 
     @Test
     final void update() {
-        Resume r = new Resume(RESUME_1.getUuid());
+        Resume r = new Resume(RESUME_1.getUuid(), "NewName");
         storage.update(r);
         assertGetResume(r);
     }
@@ -87,7 +87,7 @@ abstract class AbstractStorageTest {
 
     @Test
     final void updateIfNotExist() {
-        assertThrows(NotExistStorageException.class, () -> storage.update(new Resume("dummy")));
+        assertThrows(NotExistStorageException.class, () -> storage.update(new Resume("dummy", "name")));
     }
 
     @Test

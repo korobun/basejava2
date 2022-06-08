@@ -39,7 +39,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public final List<Resume> getAllSorted() {
-        List<Resume> allResumes = getAllResumes();
+        List<Resume> allResumes = getCopyAll();
         Comparator<Resume> comparator = Comparator.comparing(Resume::getFullName);
         comparator.thenComparing(Resume::getUuid);
 
@@ -59,5 +59,5 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void doDeleting(Object key);
 
-    protected abstract List<Resume> getAllResumes();
+    protected abstract List<Resume> getCopyAll();
 }

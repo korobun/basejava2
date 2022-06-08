@@ -38,11 +38,11 @@ public class MapResumeStorage extends AbstractStorage {
     @Override
     protected void doDeleting(Object key) {
         Resume r = (Resume) key;
-        storage.remove(r.getUuid(), r);
+        storage.remove(r.getUuid());
     }
 
     @Override
-    protected List<Resume> getAllResumes() {
+    protected List<Resume> getCopyAll() {
         return new ArrayList<>(storage.values());
     }
 
