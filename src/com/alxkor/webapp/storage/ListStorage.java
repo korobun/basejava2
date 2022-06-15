@@ -5,7 +5,7 @@ import com.alxkor.webapp.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
     protected final List<Resume> storage = new ArrayList<>();
 
     @Override
@@ -27,31 +27,28 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isResumeExist(Object key) {
+    protected boolean isResumeExist(Integer key) {
         return key != null;
     }
 
     @Override
-    protected void doSaving(Resume r, Object key) {
+    protected void doSaving(Resume r, Integer key) {
         storage.add(r);
     }
 
     @Override
-    protected void doUpdating(Resume r, Object key) {
-        int index = (Integer) key;
-        storage.set(index, r);
+    protected void doUpdating(Resume r, Integer key) {
+        storage.set(key, r);
     }
 
     @Override
-    protected Resume doGetting(Object key) {
-        int index = (Integer) key;
-        return storage.get(index);
+    protected Resume doGetting(Integer key) {
+        return storage.get(key);
     }
 
     @Override
-    protected void doDeleting(Object key) {
-        int index = (Integer) key;
-        storage.remove(index);
+    protected void doDeleting(Integer key) {
+        storage.remove(key.intValue());
     }
 
     @Override

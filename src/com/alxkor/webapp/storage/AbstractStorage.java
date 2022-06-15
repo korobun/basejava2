@@ -8,31 +8,31 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<K> implements Storage {
     @Override
     public final void save(Resume r) {
-        Object key = getFindKey(r.getUuid());
+        K key = getFindKey(r.getUuid());
         if (isResumeExist(key)) throw new ExistStorageException(r.getUuid());
         doSaving(r, key);
     }
 
     @Override
     public final void update(Resume r) {
-        Object key = getFindKey(r.getUuid());
+        K key = getFindKey(r.getUuid());
         if (!isResumeExist(key)) throw new NotExistStorageException(r.getUuid());
         doUpdating(r, key);
     }
 
     @Override
     public final Resume get(String uuid) {
-        Object key = getFindKey(uuid);
+        K key = getFindKey(uuid);
         if (!isResumeExist(key)) throw new NotExistStorageException(uuid);
         return doGetting(key);
     }
 
     @Override
     public final void delete(String uuid) {
-        Object key = getFindKey(uuid);
+        K key = getFindKey(uuid);
         if (!isResumeExist(key)) throw new NotExistStorageException(uuid);
         doDeleting(key);
     }
@@ -47,17 +47,17 @@ public abstract class AbstractStorage implements Storage {
         return allResumes;
     }
 
-    protected abstract Object getFindKey(String uuid);
+    protected abstract K getFindKey(String uuid);
 
-    protected abstract boolean isResumeExist(Object key);
+    protected abstract boolean isResumeExist(K key);
 
-    protected abstract void doSaving(Resume r, Object key);
+    protected abstract void doSaving(Resume r, K key);
 
-    protected abstract void doUpdating(Resume r, Object key);
+    protected abstract void doUpdating(Resume r, K key);
 
-    protected abstract Resume doGetting(Object key);
+    protected abstract Resume doGetting(K key);
 
-    protected abstract void doDeleting(Object key);
+    protected abstract void doDeleting(K key);
 
     protected abstract List<Resume> getCopyAll();
 }
