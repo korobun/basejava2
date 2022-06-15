@@ -7,33 +7,37 @@ import com.alxkor.webapp.model.Resume;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 public abstract class AbstractStorage<K> implements Storage {
+    //protected final Logger log = Logger.getLogger(getClass().getName());
+    private static final Logger log = Logger.getLogger(AbstractStorage.class.getName());
+
     @Override
     public final void save(Resume r) {
-        K key = getFindKey(r.getUuid());
-        if (isResumeExist(key)) throw new ExistStorageException(r.getUuid());
+        log.info("Save " + r);
+        K key = getKeyIfResumeNotExist(r.getUuid());
         doSaving(r, key);
     }
 
     @Override
     public final void update(Resume r) {
-        K key = getFindKey(r.getUuid());
-        if (!isResumeExist(key)) throw new NotExistStorageException(r.getUuid());
+        log.info("Update " + r);
+        K key = getKeyIfResumeExist(r.getUuid());
         doUpdating(r, key);
     }
 
     @Override
     public final Resume get(String uuid) {
-        K key = getFindKey(uuid);
-        if (!isResumeExist(key)) throw new NotExistStorageException(uuid);
+        log.info("Get " + uuid);
+        K key = getKeyIfResumeExist(uuid);
         return doGetting(key);
     }
 
     @Override
     public final void delete(String uuid) {
-        K key = getFindKey(uuid);
-        if (!isResumeExist(key)) throw new NotExistStorageException(uuid);
+        log.info("Delete " + uuid);
+        K key = getKeyIfResumeExist(uuid);
         doDeleting(key);
     }
 
@@ -45,6 +49,24 @@ public abstract class AbstractStorage<K> implements Storage {
 
         Collections.sort(allResumes, comparator);
         return allResumes;
+    }
+
+    private K getKeyIfResumeNotExist(String uuid) {
+        K key = getFindKey(uuid);
+        if (isResumeExist(key)) {
+            log.warning("Resume " + uuid + " already exist in storage");
+            throw new ExistStorageException(uuid);
+        }
+        return key;
+    }
+
+    private K getKeyIfResumeExist(String uuid) {
+        K key = getFindKey(uuid);
+        if (!isResumeExist(key)) {
+            log.warning("Resume " + uuid + " not exist in storage");
+            throw new NotExistStorageException(uuid);
+        }
+        return key;
     }
 
     protected abstract K getFindKey(String uuid);
