@@ -1,6 +1,6 @@
 package com.alxkor.webapp.model;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -15,17 +15,17 @@ public class Resume {
 
     private final String fullName;
 
-    private Map<ContactType, String> contacts = new HashMap<>();
+    private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
-    private Map<SectionType, Section> sections = new HashMap<>();
+    private Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
     }
 
     public Resume(String uuid, String fullName) {
-        Objects.requireNonNull(uuid, "uuid must be not null");
-        Objects.requireNonNull(uuid, "fullname must be not null");
+        Objects.requireNonNull(uuid, "uuid must not be null");
+        Objects.requireNonNull(uuid, "full name must  not be null");
         this.uuid = uuid;
         this.fullName = fullName;
     }
@@ -70,7 +70,7 @@ public class Resume {
         }
 
         for (SectionType section : SectionType.values()) {
-            info.append(section.getTitle().toUpperCase() + "\n" + sections.get(section).getContent());
+            info.append(section.getTitle().toUpperCase() + "\n" + sections.get(section).toString() + "\n");
         }
 
         return info.toString();

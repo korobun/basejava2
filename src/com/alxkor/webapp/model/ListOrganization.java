@@ -1,19 +1,37 @@
 package com.alxkor.webapp.model;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ListOrganization extends Section {
-    List<Organization> organizationList;
+    private final List<Organization> items;
 
-    public ListOrganization(List<Organization> organizationList) {
-        this.organizationList = organizationList;
+    public ListOrganization(List<Organization> items) {
+        Objects.requireNonNull(items, "items must not be null");
+        this.items = items;
+    }
+
+    public List<Organization> getItems() {
+        return items;
     }
 
     @Override
-    public String getContent() {
-        StringBuilder sb = new StringBuilder();
-        for (Organization o : organizationList) sb.append(o.toString() + "\n");
-        return sb.toString();
+    public String toString() {
+        return items.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ListOrganization that = (ListOrganization) o;
+
+        return items.equals(that.items);
+    }
+
+    @Override
+    public int hashCode() {
+        return items.hashCode();
     }
 }

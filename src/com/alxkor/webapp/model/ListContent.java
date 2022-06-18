@@ -1,20 +1,38 @@
 package com.alxkor.webapp.model;
 
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ListContent extends Section {
-    private List<String> content;
+    private final List<String> items;
 
-    public ListContent(List<String> content) {
-        this.content = content;
+    public ListContent(List<String> items) {
+        Objects.requireNonNull(items, "items must not be null");
+        this.items = items;
+    }
+
+    public List<String> getItems() {
+        return items;
     }
 
     @Override
-    public String getContent() {
-        StringBuilder sb = new StringBuilder();
-        for (String s : content) sb.append(s + "\n");
-        return sb.toString();
+    public String toString() {
+        return items.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ListContent that = (ListContent) o;
+
+        return items.equals(that.items);
+    }
+
+    @Override
+    public int hashCode() {
+        return items.hashCode();
     }
 }

@@ -11,6 +11,7 @@ public class ResumeTestData {
     public static void main(String[] args) {
         Resume gKislin = new Resume("Григорий Кислин");
 
+        gKislin.addContacts(ContactType.ADDRESS, "Санкт-Петербург");
         gKislin.addContacts(ContactType.PHONE, "+7(921) 855-0482");
         gKislin.addContacts(ContactType.SKYPE, "skype:grigory.kislin");
         gKislin.addContacts(ContactType.EMAIL, "gkislin@yandex.ru");
@@ -42,17 +43,18 @@ public class ResumeTestData {
 
         Section sectionQualification = new ListContent(qualificationList);
 
-        Organization javaOnlineProject = new Organization(
+        Organization javaOnlineProject = new Organization("Java Online Projects",
+                "http://javaops.ru/",
                 LocalDate.of(2013, 10, 1),
                 LocalDate.now(),
-                "Java Online Projects",
                 "Автор проекта.",
                 "Создание, организация и проведение Java онлайн проектов и стажировок.");
 
         Organization wrike = new Organization(
+                "Wrike",
+                "https://www.wrike.com/",
                 LocalDate.of(2014, 10, 1),
                 LocalDate.of(2016, 1, 1),
-                "Wrike",
                 "Старший разработчик (backend)",
                 "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, " +
                         "MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
@@ -62,9 +64,10 @@ public class ResumeTestData {
         Section sectionExperience = new ListOrganization(workPlaces);
 
         Organization university = new Organization(
+                "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
+                "",
                 LocalDate.of(1987, 9, 1),
                 LocalDate.of(1993, 7, 1),
-                "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
                 "Инженер (программист Fortran, C)",
                 null);
 

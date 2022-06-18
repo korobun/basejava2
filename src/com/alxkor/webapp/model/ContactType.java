@@ -1,6 +1,7 @@
 package com.alxkor.webapp.model;
 
 public enum ContactType {
+    ADDRESS("Адрес"),
     PHONE("Тел."),
     SKYPE("Skype"),
     EMAIL("Почта"),
