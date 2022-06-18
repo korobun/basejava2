@@ -1,5 +1,7 @@
 package com.alxkor.webapp.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -12,6 +14,10 @@ public class Resume {
     private final String uuid;
 
     private final String fullName;
+
+    private Map<ContactType, String> contacts = new HashMap<>();
+
+    private Map<SectionType, Section> sections = new HashMap<>();
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -52,4 +58,29 @@ public class Resume {
         return fullName;
     }
 
+    public String getInfo() {
+        StringBuilder info = new StringBuilder();
+        info.append(fullName + "\n");
+
+        info.append("КОНТАКТЫ\n");
+        for (ContactType contact : ContactType.values()) {
+            if (contacts.get(contact) != null) {
+                info.append(contact.getTitle() + ": " + contacts.get(contact) + "\n");
+            }
+        }
+
+        for (SectionType section : SectionType.values()) {
+            info.append(section.getTitle().toUpperCase() + "\n" + sections.get(section).getContent());
+        }
+
+        return info.toString();
+    }
+
+    public void addContacts(ContactType key, String contact) {
+        contacts.put(key, contact);
+    }
+
+    public void addSection(SectionType key, Section section) {
+        sections.put(key, section);
+    }
 }
