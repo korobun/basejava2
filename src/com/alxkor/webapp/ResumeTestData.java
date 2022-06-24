@@ -2,86 +2,42 @@ package com.alxkor.webapp;
 
 import com.alxkor.webapp.model.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.time.Month;
 
 public class ResumeTestData {
-    public static void main(String[] args) {
-        Resume gKislin = new Resume("Григорий Кислин");
+    public static Resume createResume(String fullName, String uuid) {
+        Resume resume = new Resume(fullName, uuid);
 
-        gKislin.addContacts(ContactType.ADDRESS, "Санкт-Петербург");
-        gKislin.addContacts(ContactType.PHONE, "+7(921) 855-0482");
-        gKislin.addContacts(ContactType.SKYPE, "skype:grigory.kislin");
-        gKislin.addContacts(ContactType.EMAIL, "gkislin@yandex.ru");
-        gKislin.addContacts(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
-        gKislin.addContacts(ContactType.GITHUB, "https://github.com/gkislin");
+        resume.addContacts(ContactType.ADDRESS, "Город");
+        resume.addContacts(ContactType.PHONE, "+7(999) 123-4567");
+        resume.addContacts(ContactType.SKYPE, "skype");
+        resume.addContacts(ContactType.EMAIL, "aaa@bbbb.com");
+        resume.addContacts(ContactType.LINKEDIN, "https://www.linkedin.com/resume");
+        resume.addContacts(ContactType.GITHUB, "https://github.com/resume");
 
-        Section sectionObjective =
-                new TextContent("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям.");
+        Organization.Position record1 = new Organization.Position(2010, Month.AUGUST, "Position1", "Description1");
+        Organization.Position record2 = new Organization.Position(20005, Month.AUGUST, 2010, Month.JANUARY, "Position2", "Description2");
+        Organization.Position record3 = new Organization.Position(2000, Month.AUGUST, 2005, Month.JANUARY, "Position3", "Description3");
+        Organization.Position record4 = new Organization.Position(1985, Month.JANUARY, 1990, Month.JUNE, "Student", null);
 
-        Section sectionPersonal =
-                new TextContent("Аналитический склад ума, сильная логика, креативность, инициативность. " +
-                        "Пурист кода и архитектуры.");
+        Organization organization1 = new Organization("Organization1", "url1", record1, record2);
+        Organization organization2 = new Organization("Organization2", "url2", record3);
+        Organization organization3 = new Organization("University", "url3", record4);
 
-        List<String> achievementList = new ArrayList<>(Arrays.asList("Организация команды и успешная реализация Java проектов " +
-                        "для сторонних заказчиков: приложения автопарк на стеке Spring Cloud/микросервисы, система мониторинга показателей " +
-                        "спортсменов на Spring Boot, участие в проекте МЭШ на Play-2, многомодульный Spring Boot + Vaadin проект " +
-                        "для комплексных DIY смет",
-                "С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. " +
-                        "Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". " +
-                        "Организация онлайн стажировок и ведение проектов. Более 3500 выпускников.",
-                "Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, " +
-                        "DuoSecurity, Google Authenticator, Jira, Zendesk."));
+        Section sectionExperience = new ListOrganization(organization1, organization2);
+        Section sectionEducation = new ListOrganization(organization3);
+        Section sectionObjective = new TextContent("Position");
+        Section sectionPersonal = new TextContent("Personal");
+        Section sectionAchievement = new ListContent("Achievement1", "Achievement2", "Achievement2");
+        Section sectionQualification = new ListContent("Java", "SQL", "Spring", "JPA", "Hibernate");
 
-        Section sectionAchievement = new ListContent(achievementList);
+        resume.addSection(SectionType.ACHIEVEMENT, sectionAchievement);
+        resume.addSection(SectionType.EDUCATION, sectionEducation);
+        resume.addSection(SectionType.EXPERIENCE, sectionExperience);
+        resume.addSection(SectionType.OBJECTIVE, sectionObjective);
+        resume.addSection(SectionType.PERSONAL, sectionPersonal);
+        resume.addSection(SectionType.QUALIFICATIONS, sectionQualification);
 
-        List<String> qualificationList = new ArrayList<>(Arrays.asList("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2",
-                "Version control: Subversion, Git, Mercury, ClearCase, Perforce",
-                "DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle, MySQL, SQLite, MS SQL, HSQLDB"));
-
-        Section sectionQualification = new ListContent(qualificationList);
-
-        Organization javaOnlineProject = new Organization("Java Online Projects",
-                "http://javaops.ru/",
-                LocalDate.of(2013, 10, 1),
-                LocalDate.now(),
-                "Автор проекта.",
-                "Создание, организация и проведение Java онлайн проектов и стажировок.");
-
-        Organization wrike = new Organization(
-                "Wrike",
-                "https://www.wrike.com/",
-                LocalDate.of(2014, 10, 1),
-                LocalDate.of(2016, 1, 1),
-                "Старший разработчик (backend)",
-                "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, " +
-                        "MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-
-        List<Organization> workPlaces = new ArrayList<>(Arrays.asList(javaOnlineProject, wrike));
-
-        Section sectionExperience = new ListOrganization(workPlaces);
-
-        Organization university = new Organization(
-                "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики",
-                "",
-                LocalDate.of(1987, 9, 1),
-                LocalDate.of(1993, 7, 1),
-                "Инженер (программист Fortran, C)",
-                null);
-
-        List<Organization> educationPlaces = new ArrayList<>(Arrays.asList(university));
-
-        Section sectionEducation = new ListOrganization(educationPlaces);
-
-        gKislin.addSection(SectionType.ACHIEVEMENT, sectionAchievement);
-        gKislin.addSection(SectionType.EDUCATION, sectionEducation);
-        gKislin.addSection(SectionType.EXPERIENCE, sectionExperience);
-        gKislin.addSection(SectionType.OBJECTIVE, sectionObjective);
-        gKislin.addSection(SectionType.PERSONAL, sectionPersonal);
-        gKislin.addSection(SectionType.QUALIFICATIONS, sectionQualification);
-
-        System.out.println(gKislin.getInfo());
+        return resume;
     }
 }

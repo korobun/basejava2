@@ -1,5 +1,6 @@
 package com.alxkor.webapp.model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,6 +10,10 @@ public class ListOrganization extends Section {
     public ListOrganization(List<Organization> items) {
         Objects.requireNonNull(items, "items must not be null");
         this.items = items;
+    }
+
+    public ListOrganization(Organization... items) {
+        this(Arrays.asList(items));
     }
 
     public List<Organization> getItems() {

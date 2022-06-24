@@ -1,5 +1,6 @@
 package com.alxkor.webapp.storage;
 
+import com.alxkor.webapp.ResumeTestData;
 import com.alxkor.webapp.exception.StorageException;
 import com.alxkor.webapp.model.Resume;
 import org.junit.jupiter.api.Test;
@@ -18,8 +19,8 @@ abstract class AbstractArrayStorageTest extends AbstractStorageTest {
     final void storageOverflow() {
         storage.clear();
         assertDoesNotThrow(() -> {
-            for (int i = 0; i < MAX_SIZE; i++) storage.save(new Resume("Name" + i));
+            for (int i = 0; i < MAX_SIZE; i++) storage.save(ResumeTestData.createResume("Name" + i, "uuid " + i));
         }, "Overflow occurred ahead of time");
-        assertThrows(StorageException.class, () -> storage.save(new Resume("Overflow")));
+        assertThrows(StorageException.class, () -> storage.save(ResumeTestData.createResume("Overflow", "uuid")));
     }
 }
