@@ -3,8 +3,7 @@ package com.alxkor.webapp.storage;
 import com.alxkor.webapp.exception.StorageException;
 import com.alxkor.webapp.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,7 +45,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void doUpdating(Resume r, File file) {
         try {
-            doWriting(r, file);
+            doWriting(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("Write file error", r.getUuid(), e);
         }
@@ -55,7 +54,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected Resume doGetting(File file) {
         try {
-            return doReading(file);
+            return doReading(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("Read file error", file.getName(), e);
         }
@@ -96,7 +95,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         return files.length;
     }
 
-    protected abstract void doWriting(Resume r, File file) throws IOException;
+    protected abstract void doWriting(Resume r, OutputStream os) throws IOException;
 
-    protected abstract Resume doReading(File file) throws IOException;
+    protected abstract Resume doReading(InputStream is) throws IOException;
 }

@@ -3,6 +3,8 @@ package com.alxkor.webapp.model;
 import java.util.Objects;
 
 public class TextContent extends Section {
+    private static final long serialVersionUID = 1L;
+
     private final String content;
 
     public TextContent(String content) {
