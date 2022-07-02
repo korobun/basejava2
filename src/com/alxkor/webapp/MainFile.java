@@ -3,6 +3,8 @@ package com.alxkor.webapp;
 import java.io.File;
 
 public class MainFile {
+    public static StringBuilder tab = new StringBuilder("");
+
     public static void main(String[] args) {
         String path = ".\\src";
         File dir = new File(path);
@@ -15,10 +17,12 @@ public class MainFile {
         if (list != null) {
             for (File f : list) {
                 if (f.isDirectory()) {
-                    System.out.println("Dir \\" + f.getName() + ":");
+                    System.out.println(tab.toString() + "\\" + f.getName() + ":");
+                    tab.append("\t");
                     printFiles(f);
+                    tab.delete(tab.length() - 1, tab.length());
                 } else {
-                    System.out.println("\t" + f.getName());
+                    System.out.println(tab.toString() + f.getName());
                 }
             }
         }
