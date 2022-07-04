@@ -5,7 +5,10 @@ import java.util.Objects;
 public class TextContent extends Section {
     private static final long serialVersionUID = 1L;
 
-    private final String content;
+    private String content;
+
+    public TextContent() {
+    }
 
     public TextContent(String content) {
         Objects.requireNonNull(content, "content must not be null");

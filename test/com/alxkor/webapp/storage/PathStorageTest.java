@@ -6,6 +6,6 @@ public class PathStorageTest extends AbstractStorageTest {
     protected static final String DIR_STORAGE = ".\\storage";
 
     public PathStorageTest() {
-        super(new AbstractPathStorage(DIR_STORAGE, new ObjectStreamSerializer()));
+        super(new PathStorage(DIR_STORAGE, new ObjectStreamSerializer()));
     }
 }

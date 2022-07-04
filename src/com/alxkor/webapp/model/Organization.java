@@ -1,5 +1,10 @@
 package com.alxkor.webapp.model;
 
+import com.alxkor.webapp.util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
@@ -10,11 +15,15 @@ import java.util.Objects;
 import static com.alxkor.webapp.util.DateUtil.NOW;
 import static com.alxkor.webapp.util.DateUtil.of;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private final Link homepage;
-    private final List<Position> positions;
+    private Link homepage;
+    private List<Position> positions;
+
+    public Organization() {
+    }
 
     public Organization(Link homepage, List<Position> positions) {
         this.homepage = homepage;
@@ -48,13 +57,19 @@ public class Organization implements Serializable {
         return result;
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
         private static final long serialVersionUID = 1L;
 
-        private final LocalDate from;
-        private final LocalDate to;
-        private final String position;
-        private final String description;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate from;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate to;
+        private String position;
+        private String description;
+
+        public Position() {
+        }
 
         public Position(LocalDate from, LocalDate to, String position, String description) {
             Objects.requireNonNull(from, "start date must not be null");

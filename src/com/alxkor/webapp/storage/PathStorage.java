@@ -15,12 +15,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private final Path directory;
 
     private StreamSerializer serializer;
 
-    public AbstractPathStorage(String dir, StreamSerializer serializer) {
+    public PathStorage(String dir, StreamSerializer serializer) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "Directory path must not be null");
         if (!Files.isDirectory(directory)) {
