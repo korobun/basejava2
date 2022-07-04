@@ -21,11 +21,16 @@ public class XmlStreamSerializer implements StreamSerializer {
 
     @Override
     public void doWriting(Resume r, OutputStream os) throws IOException {
-        xmlParser.marshall(r, new OutputStreamWriter(os, StandardCharsets.UTF_8));
+        try (Writer writer = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
+            xmlParser.marshall(r, writer);
+
+        }
     }
 
     @Override
     public Resume doReading(InputStream is) throws IOException {
-        return xmlParser.unmarshall(new InputStreamReader(is));
+        try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+            return xmlParser.unmarshall(reader);
+        }
     }
 }
