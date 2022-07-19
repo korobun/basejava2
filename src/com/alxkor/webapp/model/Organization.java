@@ -34,6 +34,14 @@ public class Organization implements Serializable {
         this(new Link(title, url), Arrays.asList(positions));
     }
 
+    public Link getHomepage() {
+        return homepage;
+    }
+
+    public List<Position> getPositions() {
+        return positions;
+    }
+
     @Override
     public String toString() {
         return "Organization(" + homepage + ", " + positions + ')';
@@ -87,6 +95,22 @@ public class Organization implements Serializable {
 
         public Position(int startYear, Month startMonth, int endYear, Month endMonth, String position, String description) {
             this(of(startYear, startMonth), of(endYear, endMonth), position, description);
+        }
+
+        public LocalDate getFrom() {
+            return from;
+        }
+
+        public LocalDate getTo() {
+            return to;
+        }
+
+        public String getPosition() {
+            return position;
+        }
+
+        public String getDescription() {
+            return description == null ? "" : description;
         }
 
         @Override
