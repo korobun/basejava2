@@ -1,19 +1,26 @@
 package com.alxkor.webapp.storage;
 
+import com.alxkor.webapp.Config;
 import com.alxkor.webapp.ResumeTestData;
 import com.alxkor.webapp.exception.ExistStorageException;
 import com.alxkor.webapp.exception.NotExistStorageException;
 import com.alxkor.webapp.model.Resume;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.suite.api.ExcludeClassNamePatterns;
 
+import java.io.File;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 abstract class AbstractStorageTest {
     protected final Storage storage;
-
+    protected static final File STORAGE = Config.get().getStorageDir();
+    protected static final String DB_URL = Config.get().getDbUrl();
+    protected static final String DB_USER = Config.get().getDbUser();
+    protected static final String DB_PASSWORD = Config.get().getDbPassword();
     private static final String UUID_1 = "uuid_1";
     private static final String UUID_2 = "uuid_2";
     private static final String UUID_3 = "uuid_3";
@@ -78,21 +85,25 @@ abstract class AbstractStorageTest {
 
     @Test
     final void getIfNotExist() {
+        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
         assertThrows(NotExistStorageException.class, () -> storage.get("dummy"));
     }
 
     @Test
     final void deleteIfNotExist() {
+        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
         assertThrows(NotExistStorageException.class, () -> storage.delete("dummy"));
     }
 
     @Test
     final void updateIfNotExist() {
+        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
         assertThrows(NotExistStorageException.class, () -> storage.update(new Resume("dummy", "name")));
     }
 
     @Test
     final void saveIfAlreadyExist() {
+        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
         assertThrows(ExistStorageException.class, () -> storage.save(RESUME_1));
     }
 

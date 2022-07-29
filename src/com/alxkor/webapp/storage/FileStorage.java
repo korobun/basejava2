@@ -77,7 +77,7 @@ public class FileStorage extends AbstractStorage<File> {
     protected List<Resume> getCopyAll() {
         File[] listFiles = directory.listFiles();
         List<Resume> listResumes = new ArrayList<>();
-        if (listFiles == null) throw new StorageException("Directory read error", null);
+        if (listFiles == null) throw new StorageException("Directory read error");
         for (File file : listFiles) {
             listResumes.add(doGetting(file));
         }
@@ -97,7 +97,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     public int size() {
         String[] files = directory.list();
-        if (files == null) throw new StorageException("Directory read error", null);
+        if (files == null) throw new StorageException("Directory read error");
         return files.length;
     }
 }

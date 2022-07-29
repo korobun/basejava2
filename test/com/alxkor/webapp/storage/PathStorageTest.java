@@ -1,11 +1,10 @@
 package com.alxkor.webapp.storage;
 
+import com.alxkor.webapp.Config;
 import com.alxkor.webapp.storage.serializer.ObjectStreamSerializer;
 
 public class PathStorageTest extends AbstractStorageTest {
-    protected static final String DIR_STORAGE = ".\\storage";
-
     public PathStorageTest() {
-        super(new PathStorage(DIR_STORAGE, new ObjectStreamSerializer()));
+        super(new PathStorage(STORAGE.getAbsolutePath(), new ObjectStreamSerializer()));
     }
 }
