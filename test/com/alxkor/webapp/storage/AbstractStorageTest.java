@@ -5,7 +5,6 @@ import com.alxkor.webapp.ResumeTestData;
 import com.alxkor.webapp.exception.ExistStorageException;
 import com.alxkor.webapp.exception.NotExistStorageException;
 import com.alxkor.webapp.model.Resume;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -85,25 +84,25 @@ abstract class AbstractStorageTest {
 
     @Test
     final void getIfNotExist() {
-        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
+//        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
         assertThrows(NotExistStorageException.class, () -> storage.get("dummy"));
     }
 
     @Test
     final void deleteIfNotExist() {
-        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
+//        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
         assertThrows(NotExistStorageException.class, () -> storage.delete("dummy"));
     }
 
     @Test
     final void updateIfNotExist() {
-        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
+//        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
         assertThrows(NotExistStorageException.class, () -> storage.update(new Resume("dummy", "name")));
     }
 
     @Test
     final void saveIfAlreadyExist() {
-        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
+//        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
         assertThrows(ExistStorageException.class, () -> storage.save(RESUME_1));
     }
 
