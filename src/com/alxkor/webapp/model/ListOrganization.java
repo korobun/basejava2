@@ -34,14 +34,12 @@ public class ListOrganization extends Section {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ListOrganization that = (ListOrganization) o;
-
         return items.equals(that.items);
     }
 
     @Override
     public int hashCode() {
-        return items.hashCode();
+        return Objects.hash(items);
     }
 }

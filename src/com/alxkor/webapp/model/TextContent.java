@@ -28,14 +28,12 @@ public class TextContent extends Section {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         TextContent that = (TextContent) o;
-
         return content.equals(that.content);
     }
 
     @Override
     public int hashCode() {
-        return content.hashCode();
+        return Objects.hash(content);
     }
 }

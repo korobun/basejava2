@@ -51,18 +51,13 @@ public class Organization implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Organization that = (Organization) o;
-
-        if (!homepage.equals(that.homepage)) return false;
-        return positions.equals(that.positions);
+        return Objects.equals(homepage, that.homepage) && Objects.equals(positions, that.positions);
     }
 
     @Override
     public int hashCode() {
-        int result = homepage.hashCode();
-        result = 31 * result + positions.hashCode();
-        return result;
+        return Objects.hash(homepage, positions);
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
@@ -122,22 +117,13 @@ public class Organization implements Serializable {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-
-            Position record = (Position) o;
-
-            if (!from.equals(record.from)) return false;
-            if (!to.equals(record.to)) return false;
-            if (!position.equals(record.position)) return false;
-            return description != null ? description.equals(record.description) : record.description == null;
+            Position position1 = (Position) o;
+            return from.equals(position1.from) && to.equals(position1.to) && position.equals(position1.position) && Objects.equals(description, position1.description);
         }
 
         @Override
         public int hashCode() {
-            int result = from.hashCode();
-            result = 31 * result + to.hashCode();
-            result = 31 * result + position.hashCode();
-            result = 31 * result + (description != null ? description.hashCode() : 0);
-            return result;
+            return Objects.hash(from, to, position, description);
         }
     }
 }

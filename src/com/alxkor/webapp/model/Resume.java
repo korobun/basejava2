@@ -74,24 +74,6 @@ public class Resume implements Serializable {
         return sections;
     }
 
-    public String getInfo() {
-        StringBuilder info = new StringBuilder();
-        info.append(fullName + "\n");
-
-        info.append("КОНТАКТЫ\n");
-        for (ContactType contact : ContactType.values()) {
-            if (contacts.get(contact) != null) {
-                info.append(contact.getTitle() + ": " + contacts.get(contact) + "\n");
-            }
-        }
-
-        for (SectionType section : SectionType.values()) {
-            info.append(section.getTitle().toUpperCase() + "\n" + sections.get(section).toString() + "\n");
-        }
-
-        return info.toString();
-    }
-
     public void addContact(ContactType key, String contact) {
         contacts.put(key, contact);
     }

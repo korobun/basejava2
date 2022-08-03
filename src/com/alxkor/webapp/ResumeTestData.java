@@ -8,13 +8,13 @@ public class ResumeTestData {
     public static Resume createResume(String fullName, String uuid) {
         Resume resume = new Resume(fullName, uuid);
 
-//        resume.addContact(ContactType.ADDRESS, "Город");
-//        resume.addContact(ContactType.PHONE, "+7(999) 123-4567");
-//        resume.addContact(ContactType.SKYPE, "skype");
-//        resume.addContact(ContactType.EMAIL, "aaa@bbbb.com");
-//        resume.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/resume");
-//        resume.addContact(ContactType.GITHUB, "https://github.com/resume");
-//
+        resume.addContact(ContactType.ADDRESS, "City");
+        resume.addContact(ContactType.PHONE, "+7(999) 123-4567");
+        resume.addContact(ContactType.SKYPE, "skype");
+        resume.addContact(ContactType.EMAIL, "aaa@bbbb.com");
+        resume.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/resume");
+        resume.addContact(ContactType.GITHUB, "https://github.com/resume");
+
 //        Organization.Position record1 = new Organization.Position(2010, Month.AUGUST, "Position1", "Description1");
 //        Organization.Position record2 = new Organization.Position(20005, Month.AUGUST, 2010, Month.JANUARY, "Position2", "Description2");
 //        Organization.Position record3 = new Organization.Position(2000, Month.AUGUST, 2005, Month.JANUARY, "Position3", "Description3");

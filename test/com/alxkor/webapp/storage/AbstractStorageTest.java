@@ -4,15 +4,16 @@ import com.alxkor.webapp.Config;
 import com.alxkor.webapp.ResumeTestData;
 import com.alxkor.webapp.exception.ExistStorageException;
 import com.alxkor.webapp.exception.NotExistStorageException;
+import com.alxkor.webapp.model.ContactType;
 import com.alxkor.webapp.model.Resume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 abstract class AbstractStorageTest {
     protected final Storage storage;
@@ -20,12 +21,15 @@ abstract class AbstractStorageTest {
     protected static final String DB_URL = Config.get().getDbUrl();
     protected static final String DB_USER = Config.get().getDbUser();
     protected static final String DB_PASSWORD = Config.get().getDbPassword();
-    private static final String UUID_1 = "uuid_1";
-    private static final String UUID_2 = "uuid_2";
-    private static final String UUID_3 = "uuid_3";
+    private static final String UUID_1 = UUID.randomUUID().toString();
+    private static final String UUID_2 = UUID.randomUUID().toString();
+    private static final String UUID_3 = UUID.randomUUID().toString();
+
+    private static final String UUID_4 = UUID.randomUUID().toString();
     private static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, "Name1");
     private static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2, "Name2");
     private static final Resume RESUME_3 = ResumeTestData.createResume(UUID_3, "Name3");
+    private static final Resume RESUME_4 = ResumeTestData.createResume(UUID_4, "Name4");
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -47,15 +51,16 @@ abstract class AbstractStorageTest {
 
     @Test
     final void save() {
-        Resume r = new Resume("uuid_4", "Name4");
-        storage.save(r);
+        storage.save(RESUME_4);
         assertSize(4);
-        assertGetResume(r);
+        assertGetResume(RESUME_4);
     }
 
     @Test
     final void update() {
-        Resume r = new Resume(RESUME_1.getUuid(), "NewName");
+        Resume r = new Resume(UUID_1, "NewName");
+        r.addContact(ContactType.ADDRESS, "newAddress");
+        r.addContact(ContactType.EMAIL, "mail@gmail.com");
         storage.update(r);
         assertGetResume(r);
     }
@@ -113,5 +118,4 @@ abstract class AbstractStorageTest {
     private void assertGetResume(Resume r) {
         assertEquals(r, storage.get(r.getUuid()));
     }
-
 }
