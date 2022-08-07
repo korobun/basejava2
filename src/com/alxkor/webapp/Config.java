@@ -1,5 +1,8 @@
 package com.alxkor.webapp;
 
+import com.alxkor.webapp.storage.SqlStorage;
+import com.alxkor.webapp.storage.Storage;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,12 +10,13 @@ import java.nio.file.Files;
 import java.util.Properties;
 
 public class Config {
-    private static final File PROPS = new File("config/resumes.config");
+    private static final File PROPS = new File("D:/Learning/Java/BASEJAVA/basejava2/config/resumes.config");
     private static final Config INSTANCE = new Config();
     private final File storageDir;
     private final String dbUrl;
     private final String dbUser;
     private final String dbPassword;
+    private final Storage storage;
 
     private Config() {
         try (InputStream is = Files.newInputStream(PROPS.toPath())) {
@@ -22,6 +26,7 @@ public class Config {
             dbUrl = props.getProperty("db.url");
             dbUser = props.getProperty("db.user");
             dbPassword = props.getProperty("db.password");
+            storage = new SqlStorage(dbUrl, dbUser, dbPassword);
         } catch (IOException e) {
             throw new IllegalStateException("Invalid config file " + PROPS.getAbsolutePath());
         }
@@ -45,5 +50,9 @@ public class Config {
 
     public String getDbPassword() {
         return dbPassword;
+    }
+
+    public Storage getStorage() {
+        return storage;
     }
 }
