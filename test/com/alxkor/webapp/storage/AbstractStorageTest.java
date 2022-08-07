@@ -24,7 +24,6 @@ abstract class AbstractStorageTest {
     private static final String UUID_1 = UUID.randomUUID().toString();
     private static final String UUID_2 = UUID.randomUUID().toString();
     private static final String UUID_3 = UUID.randomUUID().toString();
-
     private static final String UUID_4 = UUID.randomUUID().toString();
     private static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, "Name1");
     private static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2, "Name2");
@@ -95,19 +94,16 @@ abstract class AbstractStorageTest {
 
     @Test
     final void deleteIfNotExist() {
-//        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
         assertThrows(NotExistStorageException.class, () -> storage.delete("dummy"));
     }
 
     @Test
     final void updateIfNotExist() {
-//        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
         assertThrows(NotExistStorageException.class, () -> storage.update(new Resume("dummy", "name")));
     }
 
     @Test
     final void saveIfAlreadyExist() {
-//        Assumptions.assumeFalse(this.getClass().equals(SqlStorageTest.class));
         assertThrows(ExistStorageException.class, () -> storage.save(RESUME_1));
     }
 

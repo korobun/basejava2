@@ -81,7 +81,7 @@ public class Organization implements Serializable {
             this.from = from;
             this.to = to;
             this.position = position;
-            this.description = description;
+            this.description = description == null ? "" : description;
         }
 
         public Position(int startYear, Month startMonth, String position, String description) {
@@ -105,7 +105,7 @@ public class Organization implements Serializable {
         }
 
         public String getDescription() {
-            return description == null ? "" : description;
+            return description;
         }
 
         @Override
