@@ -1,7 +1,6 @@
 package com.alxkor.webapp.storage;
 
 import com.alxkor.webapp.Config;
-import com.alxkor.webapp.ResumeTestData;
 import com.alxkor.webapp.exception.ExistStorageException;
 import com.alxkor.webapp.exception.NotExistStorageException;
 import com.alxkor.webapp.model.ContactType;
@@ -11,9 +10,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.alxkor.webapp.ResumeTestData.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 abstract class AbstractStorageTest {
     protected final Storage storage;
@@ -21,14 +21,6 @@ abstract class AbstractStorageTest {
     protected static final String DB_URL = Config.get().getDbUrl();
     protected static final String DB_USER = Config.get().getDbUser();
     protected static final String DB_PASSWORD = Config.get().getDbPassword();
-    private static final String UUID_1 = UUID.randomUUID().toString();
-    private static final String UUID_2 = UUID.randomUUID().toString();
-    private static final String UUID_3 = UUID.randomUUID().toString();
-    private static final String UUID_4 = UUID.randomUUID().toString();
-    private static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, "Name1");
-    private static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2, "Name2");
-    private static final Resume RESUME_3 = ResumeTestData.createResume(UUID_3, "Name3");
-    private static final Resume RESUME_4 = ResumeTestData.createResume(UUID_4, "Name4");
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;

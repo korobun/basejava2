@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.util.Properties;
 
 public class Config {
-    private static final File PROPS = new File("D:/Learning/Java/BASEJAVA/basejava2/config/resumes.config");
+    private static final File PROPS = new File(getHomeDir(), "config/resumes.config");
     private static final Config INSTANCE = new Config();
     private final File storageDir;
     private final String dbUrl;
@@ -54,5 +54,12 @@ public class Config {
 
     public Storage getStorage() {
         return storage;
+    }
+
+    private static File getHomeDir() {
+        String prop = System.getProperty("homeDir");
+        File home = new File(prop == null ? "." : prop);
+        if (!home.isDirectory()) throw new IllegalStateException(prop + " is not directory");
+        return home;
     }
 }

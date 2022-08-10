@@ -2,6 +2,7 @@ package com.alxkor.webapp.web;
 
 import com.alxkor.webapp.Config;
 import com.alxkor.webapp.exception.StorageException;
+import com.alxkor.webapp.model.ContactType;
 import com.alxkor.webapp.model.Resume;
 import com.alxkor.webapp.storage.Storage;
 
@@ -29,12 +30,6 @@ public class ResumeServlet extends HttpServlet {
 //        response.setHeader("Content-Type", "text/html;charset=UTF-8");
         response.setContentType("text/html; charset=UTF-8");
 
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new StorageException(e);
-        }
-
         Writer writer = response.getWriter();
         writer.write("<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
@@ -47,14 +42,14 @@ public class ResumeServlet extends HttpServlet {
                 "<h3>Список резюме</h3>\n" +
                 "<table border=\"1\" cellpadding=\"8\" cellspacing=\"0\">\n" +
                 "    <tr>\n" +
-                "        <th>uuid</th>\n" +
                 "        <th>full name</th>\n" +
+                "        <th>email</th>\n" +
                 "    </tr>");
 
         for (Resume r : dataBase.getAllSorted()) {
             writer.write("<tr>\n" +
-                    "        <td>" + r.getUuid() + "</td>\n" +
-                    "        <td>" + r.getFullName() + "</td>\n" +
+                    "<td><a href=\"resume?uuid=" + r.getUuid() + "\">" + r.getFullName() + "</a></td>" +
+                    "        <td>" + r.getContacts().get(ContactType.EMAIL) + "</td>\n" +
                     "    </tr>");
         }
 
