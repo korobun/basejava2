@@ -25,37 +25,8 @@ public class ResumeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-//        response.setHeader("Content-Type", "text/html;charset=UTF-8");
-        response.setContentType("text/html; charset=UTF-8");
-
-        Writer writer = response.getWriter();
-        writer.write("<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <style></style>\n" +
-                "    <title>Список резюме</title>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "<h3>Список резюме</h3>\n" +
-                "<table border=\"1\" cellpadding=\"8\" cellspacing=\"0\">\n" +
-                "    <tr>\n" +
-                "        <th>full name</th>\n" +
-                "        <th>email</th>\n" +
-                "    </tr>");
-
-        for (Resume r : dataBase.getAllSorted()) {
-            writer.write("<tr>\n" +
-                    "<td><a href=\"resume?uuid=" + r.getUuid() + "\">" + r.getFullName() + "</a></td>" +
-                    "        <td>" + r.getContacts().get(ContactType.EMAIL) + "</td>\n" +
-                    "    </tr>");
-        }
-
-        writer.write("</table>\n" +
-                "</body>\n" +
-                "</html>");
+        request.setAttribute("resumes", dataBase.getAllSorted());
+        request.getRequestDispatcher("WEB-INF/jsp/list.jsp").forward(request, response);
     }
 
     @Override
