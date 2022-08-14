@@ -1,7 +1,6 @@
-<%@ page import="com.alxkor.webapp.model.Resume" %>
-<%@ page import="java.util.List" %>
 <%@ page import="com.alxkor.webapp.model.ContactType" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -18,17 +17,15 @@
             <th>Имя</th>
             <th>e-mail</th>
         </tr>
-
-        <%
-            for (Resume r : (List<Resume>) request.getAttribute("resumes")) {
-        %>
-        <tr>
-            <td><a href="resume?uuid=<%=r.getUuid()%>"><%=r.getFullName()%></a></td>
-            <td><%=r.getContacts().get(ContactType.EMAIL)%></td>
-        </tr>
-        <%
-            }
-        %>
+        <c:forEach items="${resumes}" var="resume">
+            <jsp:useBean id="resume" class="com.alxkor.webapp.model.Resume"/>
+            <tr>
+                <td><a href="resume?uuid=${resume.uuid}&action=view">${resume.fullName}
+                </a></td>
+                <td>${resume.contacts.get(ContactType.EMAIL)}
+                </td>
+            </tr>
+        </c:forEach>
     </table>
 </section>
 <jsp:include page="fragment/footer.jsp"></jsp:include>
