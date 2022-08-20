@@ -1,7 +1,6 @@
 package com.alxkor.webapp.storage;
 
 import com.alxkor.webapp.exception.NotExistStorageException;
-import com.alxkor.webapp.exception.StorageException;
 import com.alxkor.webapp.model.ContactType;
 import com.alxkor.webapp.model.Resume;
 import com.alxkor.webapp.model.Section;
@@ -178,7 +177,7 @@ public class SqlStorage implements Storage {
     private void addContact(ResultSet resultSet, Resume r) throws SQLException {
         String type = resultSet.getString("type");
         if (type != null) {
-            r.addContact(ContactType.valueOf(type), resultSet.getString("value"));
+            r.setContact(ContactType.valueOf(type), resultSet.getString("value"));
         }
     }
 
@@ -186,7 +185,7 @@ public class SqlStorage implements Storage {
         String type = resultSet.getString("type");
         if (type != null) {
             SectionType sectionType = SectionType.valueOf(type);
-            r.addSection(sectionType, JsonParser.read(resultSet.getString("value"), Section.class));
+            r.setSection(sectionType, JsonParser.read(resultSet.getString("value"), Section.class));
         }
     }
 }

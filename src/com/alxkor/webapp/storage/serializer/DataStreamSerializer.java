@@ -74,10 +74,10 @@ public class DataStreamSerializer implements StreamSerializer {
             String uuid = dis.readUTF();
             String fullName = dis.readUTF();
             Resume resume = new Resume(uuid, fullName);
-            readItems(dis, () -> resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
+            readItems(dis, () -> resume.setContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
             readItems(dis, () -> {
                 SectionType type = SectionType.valueOf(dis.readUTF());
-                resume.addSection(type, readSection(dis, type));
+                resume.setSection(type, readSection(dis, type));
             });
             return resume;
         }

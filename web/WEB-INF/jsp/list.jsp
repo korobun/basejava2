@@ -10,12 +10,14 @@
     <title>Список всех резюме</title>
 </head>
 <body>
-<jsp:include page="fragment/header.jsp"></jsp:include>
+<jsp:include page="fragment/header.jsp"/>
 <section>
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
             <th>Имя</th>
             <th>e-mail</th>
+            <th></th>
+            <th></th>
         </tr>
         <c:forEach items="${resumes}" var="resume">
             <jsp:useBean id="resume" class="com.alxkor.webapp.model.Resume"/>
@@ -24,10 +26,12 @@
                 </a></td>
                 <td>${resume.contacts.get(ContactType.EMAIL)}
                 </td>
+                <td><a href="resume?uuid=${resume.uuid}&action=edit">Edit</a></td>
+                <td><a href="resume?uuid=${resume.uuid}&action=delete">Delete</a></td>
             </tr>
         </c:forEach>
     </table>
 </section>
-<jsp:include page="fragment/footer.jsp"></jsp:include>
+<jsp:include page="fragment/footer.jsp"/>
 </body>
 </html>

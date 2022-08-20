@@ -20,4 +20,11 @@ public enum ContactType {
         return title;
     }
 
+    public String toHtml(String value) {
+        return value == null ? "" : toHtml0(value);
+    }
+
+    private String toHtml0(String value) {
+        return title + ": " + value;
+    }
 }

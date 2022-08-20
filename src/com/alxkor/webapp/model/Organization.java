@@ -17,6 +17,7 @@ import static com.alxkor.webapp.util.DateUtil.of;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
+    public static final Organization EMPTY = new Organization("", "", Organization.Position.EMPTY);
     private static final long serialVersionUID = 1L;
 
     private Link homepage;
@@ -62,6 +63,7 @@ public class Organization implements Serializable {
 
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
+        public static final Position EMPTY = new Position();
         private static final long serialVersionUID = 1L;
 
         @XmlJavaTypeAdapter(LocalDateAdapter.class)

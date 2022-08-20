@@ -18,12 +18,12 @@ public class ResumeTestData {
     public static Resume createResume(String fullName, String uuid) {
         Resume resume = new Resume(fullName, uuid);
 
-        resume.addContact(ContactType.ADDRESS, "City");
-        resume.addContact(ContactType.PHONE, "+7(999) 123-4567");
-        resume.addContact(ContactType.SKYPE, "skype");
-        resume.addContact(ContactType.EMAIL, "aaa@bbbb.com");
-        resume.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/resume");
-        resume.addContact(ContactType.GITHUB, "https://github.com/resume");
+        resume.setContact(ContactType.ADDRESS, "City");
+        resume.setContact(ContactType.PHONE, "+7(999) 123-4567");
+        resume.setContact(ContactType.SKYPE, "skype");
+        resume.setContact(ContactType.EMAIL, "aaa@bbbb.com");
+        resume.setContact(ContactType.LINKEDIN, "https://www.linkedin.com/resume");
+        resume.setContact(ContactType.GITHUB, "https://github.com/resume");
 
         Organization.Position record1 = new Organization.Position(2010, Month.AUGUST, "Position1", "Description1");
         Organization.Position record2 = new Organization.Position(2005, Month.AUGUST, 2010, Month.JANUARY, "Position2", "Description2");
@@ -41,12 +41,12 @@ public class ResumeTestData {
         Section sectionAchievement = new ListContent("Achievement1", "Achievement2", "Achievement2");
         Section sectionQualification = new ListContent("Java", "SQL", "Spring", "JPA", "Hibernate");
 
-        resume.addSection(SectionType.ACHIEVEMENT, sectionAchievement);
-        resume.addSection(SectionType.EDUCATION, sectionEducation);
-        resume.addSection(SectionType.EXPERIENCE, sectionExperience);
-        resume.addSection(SectionType.OBJECTIVE, sectionObjective);
-        resume.addSection(SectionType.PERSONAL, sectionPersonal);
-        resume.addSection(SectionType.QUALIFICATIONS, sectionQualification);
+        resume.setSection(SectionType.ACHIEVEMENT, sectionAchievement);
+        resume.setSection(SectionType.EDUCATION, sectionEducation);
+        resume.setSection(SectionType.EXPERIENCE, sectionExperience);
+        resume.setSection(SectionType.OBJECTIVE, sectionObjective);
+        resume.setSection(SectionType.PERSONAL, sectionPersonal);
+        resume.setSection(SectionType.QUALIFICATIONS, sectionQualification);
 
         return resume;
     }

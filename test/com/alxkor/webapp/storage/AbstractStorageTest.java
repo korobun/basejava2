@@ -50,8 +50,8 @@ abstract class AbstractStorageTest {
     @Test
     final void update() {
         Resume r = new Resume(UUID_1, "NewName");
-        r.addContact(ContactType.ADDRESS, "newAddress");
-        r.addContact(ContactType.EMAIL, "mail@gmail.com");
+        r.setContact(ContactType.ADDRESS, "newAddress");
+        r.setContact(ContactType.EMAIL, "mail@gmail.com");
         storage.update(r);
         assertGetResume(r);
     }
