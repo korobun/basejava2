@@ -100,7 +100,7 @@ public class SqlStorage implements Storage {
     public List<Resume> getAllSorted() {
         return sqlHelper.executeTransaction(conn -> {
             Map<String, Resume> map = new LinkedHashMap<>();
-            try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM resume")) {
+            try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM resume ORDER BY full_name")) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     String uuid = rs.getString("uuid");

@@ -14,8 +14,18 @@ import java.util.UUID;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Resume implements Serializable {
+public class Resume implements Serializable, Comparable<Resume> {
     private static final long serialVersionUID = 1L;
+    public static final Resume EMPTY = new Resume("");
+
+    static {
+        EMPTY.setSection(SectionType.OBJECTIVE, TextContent.EMPTY);
+        EMPTY.setSection(SectionType.PERSONAL, TextContent.EMPTY);
+        EMPTY.setSection(SectionType.ACHIEVEMENT, ListContent.EMPTY);
+        EMPTY.setSection(SectionType.QUALIFICATIONS, ListContent.EMPTY);
+        EMPTY.setSection(SectionType.EXPERIENCE, new ListOrganization(Organization.EMPTY));
+        EMPTY.setSection(SectionType.EDUCATION, new ListOrganization(Organization.EMPTY));
+    }
 
     // Unique identifier
     private String uuid;
@@ -92,5 +102,11 @@ public class Resume implements Serializable {
 
     public Section getSection(SectionType type) {
         return sections.get(type);
+    }
+
+    @Override
+    public int compareTo(Resume o) {
+        int result = fullName.compareTo(o.getFullName());
+        return result == 0 ? uuid.compareTo(o.getUuid()) : result;
     }
 }

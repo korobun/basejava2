@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class TextContent extends Section {
     private static final long serialVersionUID = 1L;
-
+    public static final TextContent EMPTY = new TextContent("");
     private String content;
 
     public TextContent() {

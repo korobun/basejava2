@@ -42,24 +42,47 @@ public class ResumeServlet extends HttpServlet {
                 storage.delete(uuid);
                 response.sendRedirect("resume");
                 return;
+            case "add":
+                r = Resume.EMPTY;
+                storage.save(r);
+                break;
             case "view":
                 r = storage.get(uuid);
                 break;
             case "edit":
                 r = storage.get(uuid);
                 for (SectionType type : new SectionType[]{SectionType.EXPERIENCE, SectionType.EDUCATION}) {
-                    ListOrganization section = (ListOrganization) r.getSection(type);
-                    List<Organization> firstEmptyOrganizations = new ArrayList<>();
-                    firstEmptyOrganizations.add(Organization.EMPTY);
-                    if (section != null) {
-                        for (Organization org : section.getItems()) {
-                            List<Organization.Position> firstEmptyPositions = new ArrayList<>();
-                            firstEmptyPositions.add(Organization.Position.EMPTY);
-                            firstEmptyPositions.addAll(org.getPositions());
-                            firstEmptyOrganizations.add(new Organization(org.getHomepage(), firstEmptyPositions));
-                        }
+                    Section section = r.getSection(type);
+                    switch (type) {
+                        case OBJECTIVE:
+                        case PERSONAL:
+                            if (section == null) {
+                                section = TextContent.EMPTY;
+                            }
+                            break;
+                        case ACHIEVEMENT:
+                        case QUALIFICATIONS:
+                            if (section == null) {
+                                section = ListContent.EMPTY;
+                            }
+                            break;
+                        case EXPERIENCE:
+                        case EDUCATION:
+                            ListOrganization orgSection = (ListOrganization) r.getSection(type);
+                            List<Organization> firstEmptyOrganizations = new ArrayList<>();
+                            firstEmptyOrganizations.add(Organization.EMPTY);
+                            if (orgSection != null) {
+                                for (Organization org : orgSection.getItems()) {
+                                    List<Organization.Position> firstEmptyPositions = new ArrayList<>();
+                                    firstEmptyPositions.add(Organization.Position.EMPTY);
+                                    firstEmptyPositions.addAll(org.getPositions());
+                                    firstEmptyOrganizations.add(new Organization(org.getHomepage(), firstEmptyPositions));
+                                }
+                            }
+                            section = new ListOrganization(firstEmptyOrganizations);
+                            break;
                     }
-                    r.setSection(type, new ListOrganization(firstEmptyOrganizations));
+                    r.setSection(type, section);
                 }
                 break;
             default:
@@ -99,7 +122,7 @@ public class ResumeServlet extends HttpServlet {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        r.setSection(type, new ListContent(value.split("/n")));
+                        r.setSection(type, new ListContent(value.trim().split("\n")));
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
