@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.util.Properties;
 
 public class Config {
-    private static final File PROPS = new File(getHomeDir(), "config/resumes.config");
+    private static final String PROPS = "/resumes.config";
     private static final Config INSTANCE = new Config();
     private final File storageDir;
     private final String dbUrl;
@@ -19,7 +19,7 @@ public class Config {
     private final Storage storage;
 
     private Config() {
-        try (InputStream is = Files.newInputStream(PROPS.toPath())) {
+        try (InputStream is = Config.class.getResourceAsStream(PROPS)) {
             Properties props = new Properties();
             props.load(is);
             storageDir = new File(props.getProperty("storage.dir"));
@@ -28,7 +28,7 @@ public class Config {
             dbPassword = props.getProperty("db.password");
             storage = new SqlStorage(dbUrl, dbUser, dbPassword);
         } catch (IOException e) {
-            throw new IllegalStateException("Invalid config file " + PROPS.getAbsolutePath());
+            throw new IllegalStateException("Invalid config file " + PROPS);
         }
     }
 
@@ -56,10 +56,10 @@ public class Config {
         return storage;
     }
 
-    private static File getHomeDir() {
-        String prop = System.getProperty("homeDir");
-        File home = new File(prop == null ? "." : prop);
-        if (!home.isDirectory()) throw new IllegalStateException(prop + " is not directory");
-        return home;
-    }
+//    private static File getHomeDir() {
+//        String prop = System.getProperty("homeDir");
+//        File home = new File(prop == null ? "." : prop);
+//        if (!home.isDirectory()) throw new IllegalStateException(prop + " is not directory");
+//        return home;
+//    }
 }

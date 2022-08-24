@@ -23,7 +23,7 @@ public class ListContent extends Section {
     }
 
     public List<String> getItems() {
-        return items;
+        return items == null ? EMPTY.items : items;
     }
 
     @Override
